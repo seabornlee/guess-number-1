@@ -52,7 +52,6 @@ dependencies {
             "io.cucumber:cucumber-spring:2.+",
             "org.seleniumhq.selenium:selenium-java",
             "org.assertj:assertj-core",
-//            gradleTestKit()
     )
     testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
     cucumberRuntime "io.cucumber:cucumber-java:2.+"
