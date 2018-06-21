@@ -12,8 +12,13 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
+plugins {
+    id "java"
+    id "com.github.samueltbrown.cucumber" version "0.9"
+    id "idea"
+    id "war"
+    id "jacoco"
+}
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
@@ -29,12 +34,63 @@ repositories {
 
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.springframework.boot:spring-boot-starter-mustache')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.webjars:bootstrap:4.1.1')
-    compile('org.webjars:jquery:3.3.1-1')
-    compile('mysql:mysql-connector-java')
+    compile(
+            'org.springframework.boot:spring-boot-starter-data-jpa',
+            'org.springframework.boot:spring-boot-starter-mustache',
+            'org.springframework.boot:spring-boot-starter-web',
+            'org.webjars:bootstrap:4.1.1',
+            'org.webjars:jquery:3.3.1-1',
+            'mysql:mysql-connector-java',
+            "org.projectlombok:lombok:1.18.0"
+    )
     runtime('org.springframework.boot:spring-boot-devtools')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile(
+            'org.springframework.boot:spring-boot-starter-test',
+            "org.junit.jupiter:junit-jupiter-api:5.2.0",
+            "org.mockito:mockito-core:2.+",
+            "io.cucumber:cucumber-java:2.+",
+            "io.cucumber:cucumber-spring:2.+",
+            "org.seleniumhq.selenium:selenium-java",
+            "org.assertj:assertj-core",
+//            gradleTestKit()
+    )
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+    cucumberRuntime "io.cucumber:cucumber-java:2.+"
+    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
+}
+
+def commandLineArg(argName, ifArgPresent) {
+    if (project.hasProperty(argName))
+        ifArgPresent(project.property(argName))
+}
+
+def runInSequence(Task task, String... subTaskNames) {
+    task.dependsOn subTaskNames
+    [subTaskNames.dropRight(1), subTaskNames.drop(1)].transpose()
+            .each { project.tasks.findByName(it[1]).mustRunAfter it[0] }
+}
+
+ext {
+    commandLineArg = this.&commandLineArg
+    runInSequence = this.&runInSequence
+}
+
+task ci {
+    runInSequence(it, "clean", "check", "cucumber")
+}
+
+cucumber {
+    jvmOptions {
+        environment "SPRING_PROFILES_ACTIVE", "test"
+        commandLineArg "port", { port ->
+            environment "SERVER_PORT", port
+        }
+    }
+}
+
+test {
+    environment "SPRING_PROFILES_ACTIVE", "test"
+    jacoco {
+        enabled false
+    }
 }
