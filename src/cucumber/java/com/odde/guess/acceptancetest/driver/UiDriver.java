@@ -1,7 +1,5 @@
 package com.odde.guess.acceptancetest.driver;
 
-import com.odde.guess.common.Params;
-
 public interface UiDriver {
     void close();
 

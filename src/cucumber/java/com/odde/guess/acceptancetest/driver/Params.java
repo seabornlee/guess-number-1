@@ -1,4 +1,4 @@
-package com.odde.guess.common;
+package com.odde.guess.acceptancetest.driver;
 
 import java.util.HashMap;
 import java.util.Map;

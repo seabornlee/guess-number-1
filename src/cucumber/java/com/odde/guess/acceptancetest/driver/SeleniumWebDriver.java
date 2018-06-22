@@ -1,6 +1,5 @@
 package com.odde.guess.acceptancetest.driver;
 
-import com.odde.guess.common.Params;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
