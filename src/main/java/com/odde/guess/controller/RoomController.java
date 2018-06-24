@@ -7,28 +7,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/rooms")
 public class RoomController {
-    @GetMapping("/")
+    @GetMapping
     public ModelAndView rooms(){
         ModelAndView view = new ModelAndView();
-        view.setViewName("/rooms/index");
+        view.setViewName("index");
         return view;
     }
 
-    @GetMapping("/rooms/create")
+    @GetMapping("/create")
     public String createRoom() {
-        return "rooms/create";
+        return "/rooms/create";
     }
 
-    @PostMapping("/rooms/create")
+    @PostMapping("/create")
     public String submitCreateRoom() {
         return "redirect:/rooms/show";
     }
 
-    @GetMapping("/rooms/show")
-    public String show() {
-        return "/rooms/show";
+    @GetMapping("/show")
+    public ModelAndView show() {
+        ModelAndView modelAndView = new ModelAndView("/rooms/show");
+        modelAndView.addObject("message","");
+        return modelAndView;
     }
 
+    @PostMapping("/show")
+    public ModelAndView guess() {
+        ModelAndView modelAndView = new ModelAndView("/rooms/show");
+        modelAndView.addObject("message","You Win!");
+        return modelAndView;
+
+    }
 }

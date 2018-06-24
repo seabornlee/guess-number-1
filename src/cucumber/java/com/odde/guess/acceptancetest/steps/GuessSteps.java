@@ -22,4 +22,14 @@ public class GuessSteps {
         driver.waitForTextPresent("GUESS");
     }
 
+    @When("^guess \"([^\"]*)\"$")
+    public void guess(String arg0) throws Throwable {
+        driver.inputTextByName(arg0, "guess");
+        driver.clickByText("Go");
+    }
+
+    @Then("^win the game$")
+    public void winTheGame() throws Throwable {
+        driver.waitForTextPresent("You Win!");
+    }
 }
