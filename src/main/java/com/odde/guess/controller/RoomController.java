@@ -1,5 +1,8 @@
 package com.odde.guess.controller;
 
+import com.odde.guess.repo.Room;
+import com.odde.guess.repo.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,10 +12,18 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/rooms")
 public class RoomController {
+
+    private final RoomRepository repo;
+
+    @Autowired
+    public RoomController(RoomRepository repo) {
+        this.repo = repo;
+    }
+
     @GetMapping
     public ModelAndView rooms(){
         ModelAndView view = new ModelAndView();
-        view.setViewName("index");
+        view.setViewName("/rooms/index");
         return view;
     }
 
@@ -22,7 +33,9 @@ public class RoomController {
     }
 
     @PostMapping("/create")
-    public String submitCreateRoom() {
+    public String submitCreateRoom(String secret) {
+        Room room = new Room(secret);
+        repo.save(room);
         return "redirect:/rooms/show";
     }
 
