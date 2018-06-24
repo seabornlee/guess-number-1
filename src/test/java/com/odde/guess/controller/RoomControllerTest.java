@@ -8,7 +8,9 @@ import org.mockito.Mockito;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class RoomControllerTest {
     private RoomRepository repo = Mockito.mock(RoomRepository.class);
@@ -20,13 +22,28 @@ public class RoomControllerTest {
         assertThat(view.getViewName()).isEqualTo("/rooms/index");
     }
 
-    @Test
-    public void create_room(){
-        String secret = "1234";
-        controller.submitCreateRoom(secret);
-        ArgumentCaptor<Room> captor = ArgumentCaptor.forClass(Room.class);
-        verify(repo).save(captor.capture());
-        assertThat(captor.getValue().getSecret()).isEqualTo(secret);
+    private void willReturnSavedRoomWithId(final int id) {
+        when(repo.save(any(Room.class))).thenReturn(new Room("1234") {{setId(id);}});
     }
 
+    @Test
+    public void create_room(){
+        willReturnSavedRoomWithId(1);
+
+        controller.submitCreateRoom("1234");
+
+        ArgumentCaptor<Room> captor = ArgumentCaptor.forClass(Room.class);
+        verify(repo).save(captor.capture());
+        assertThat(captor.getValue().getSecret()).isEqualTo("1234");
+    }
+
+    @Test
+    void show_room_after_creation() {
+        willReturnSavedRoomWithId(1);
+
+        String view = controller.submitCreateRoom("1234");
+
+        assertThat(view).isEqualToIgnoringCase("redirect:/rooms/1");
+
+    }
 }

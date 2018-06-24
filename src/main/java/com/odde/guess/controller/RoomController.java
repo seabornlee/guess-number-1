@@ -34,9 +34,8 @@ public class RoomController {
 
     @PostMapping("/create")
     public String submitCreateRoom(String secret) {
-        Room room = new Room(secret);
-        repo.save(room);
-        return "redirect:/rooms/show";
+        Room room = repo.save(new Room(secret));
+        return "redirect:/rooms/"+ room.getId();
     }
 
     @GetMapping("/show")
