@@ -3,17 +3,15 @@ package com.odde.guess.controller;
 import com.odde.guess.repo.Room;
 import com.odde.guess.repo.RoomRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.*;
 
 public class RoomControllerTest {
-    private RoomRepository repo = Mockito.mock(RoomRepository.class);
+    private RoomRepository repo = mock(RoomRepository.class);
     private RoomController controller = new RoomController(repo);
 
     @Test
@@ -32,9 +30,7 @@ public class RoomControllerTest {
 
         controller.submitCreateRoom("1234");
 
-        ArgumentCaptor<Room> captor = ArgumentCaptor.forClass(Room.class);
-        verify(repo).save(captor.capture());
-        assertThat(captor.getValue().getSecret()).isEqualTo("1234");
+        verify(repo).save(argThat(room -> "1234".equals(room.getSecret())));
     }
 
     @Test
@@ -44,6 +40,5 @@ public class RoomControllerTest {
         String view = controller.submitCreateRoom("1234");
 
         assertThat(view).isEqualToIgnoringCase("redirect:/rooms/1");
-
     }
 }
