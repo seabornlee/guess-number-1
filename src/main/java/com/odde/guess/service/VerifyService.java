@@ -14,12 +14,14 @@ public class VerifyService {
         this.repo = repo;
     }
 
-    public String getResult(long id, String guess) {
+    public String verify(long id, String guess) {
         Room room = repo.findById(id);
+        String result;
         if (room.getSecret().equals(guess)) {
-            return "You Win!";
+            result = "You Win!";
         } else {
-            return "0A0B";
+            result = "0A0B";
         }
+        return result;
     }
 }

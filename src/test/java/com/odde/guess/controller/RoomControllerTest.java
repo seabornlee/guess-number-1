@@ -2,6 +2,7 @@ package com.odde.guess.controller;
 
 import com.odde.guess.repo.Room;
 import com.odde.guess.repo.RoomRepository;
+import com.odde.guess.service.VerifyService;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,7 +13,8 @@ import static org.mockito.Mockito.*;
 
 public class RoomControllerTest {
     private RoomRepository repo = mock(RoomRepository.class);
-    private RoomController controller = new RoomController(repo);
+    private VerifyService verifyService = mock(VerifyService.class);
+    private RoomController controller = new RoomController(repo, verifyService);
 
     @Test
     public void rooms_should_go_to_index_page() {
@@ -39,21 +41,12 @@ public class RoomControllerTest {
     }
 
     @Test
-    public void guess_win() {
-        when(repo.findById(1)).thenReturn(new Room("1234"));
-
-        ModelAndView view = controller.guess(1, "1234");
-
-        assertThat(view.getModelMap().get("message")).isEqualTo("You Win!");
-    }
-
-    @Test
-    public void guess_wrong() {
-        when(repo.findById(1)).thenReturn(new Room("1234"));
+    public void show_result() {
+        when(verifyService.verify(anyLong(), anyString())).thenReturn("Result");
 
         ModelAndView view = controller.guess(1, "5678");
 
-        assertThat(view.getModelMap().get("message")).isEqualTo("0A0B");
+        assertThat(view.getModelMap().get("message")).isEqualTo("Result");
     }
 
     private void willReturnSavedRoomWithId(int id) {

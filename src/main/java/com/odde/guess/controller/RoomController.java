@@ -24,10 +24,6 @@ public class RoomController {
         this.verification = verification;
     }
 
-    public RoomController(RoomRepository repo) {
-        this(repo, new VerifyService(repo));
-    }
-
     @GetMapping
     public ModelAndView rooms(){
         ModelAndView view = new ModelAndView();
@@ -54,7 +50,7 @@ public class RoomController {
 
     @PostMapping("/show/{id}")
     public ModelAndView guess(@PathVariable("id") long id, String guess) {
-        return showMessage(verification.getResult(id, guess));
+        return showMessage(verification.verify(id, guess));
     }
 
     private ModelAndView showMessage(String message) {
