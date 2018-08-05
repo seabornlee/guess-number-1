@@ -20,8 +20,19 @@ public class VerifyService {
         if (room.getSecret().equals(guess)) {
             result = "4A0B";
         } else {
+            for (int i = 0; i < 4; i++) {
+                if (equalDigital(room.getSecret(), guess, i)) {
+                    return "1A0B";
+                }
+            }
+
             result = "0A0B";
+
         }
         return result;
+    }
+
+    private boolean equalDigital(String secret, String guess, int i) {
+        return guess.charAt(i) == secret.charAt(i);
     }
 }

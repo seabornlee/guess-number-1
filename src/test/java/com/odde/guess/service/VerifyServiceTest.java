@@ -20,10 +20,18 @@ public class VerifyServiceTest {
 
     @Test
     public void guess_wrong() {
-        verifyGuess("0A0B", "1234", "5678");
+        verifyGuess("0A0B", "5678", "1234");
     }
 
-    private void verifyGuess(String expectResult, String secret, String guess) {
+    @Test
+    public void _1A0B() {
+        verifyGuess("1A0B", "1678", "1234");
+        verifyGuess("1A0B", "5278", "1234");
+        verifyGuess("1A0B", "5638", "1234");
+        verifyGuess("1A0B", "5674", "1234");
+    }
+
+    private void verifyGuess(String expectResult, String guess, String secret) {
         when(repo.findById(1)).thenReturn(new Room(secret));
 
         String result = verifyService.verify(1, guess);
