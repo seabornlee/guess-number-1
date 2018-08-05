@@ -5,6 +5,7 @@ import com.odde.guess.repo.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,18 +36,19 @@ public class RoomController {
     @PostMapping("/create")
     public String submitCreateRoom(String secret) {
         Room room = repo.save(new Room(secret));
-        return "redirect:/rooms/"+ room.getId();
+        return "redirect:/rooms/show/" + room.getId();
     }
 
-    @GetMapping("/show")
-    public ModelAndView show() {
+
+    @GetMapping("/show/{id}")
+    public ModelAndView show(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("/rooms/show");
         modelAndView.addObject("message","");
         return modelAndView;
     }
 
-    @PostMapping("/show")
-    public ModelAndView guess() {
+    @PostMapping("/show/{id}")
+    public ModelAndView guess(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("/rooms/show");
         modelAndView.addObject("message","You Win!");
         return modelAndView;
