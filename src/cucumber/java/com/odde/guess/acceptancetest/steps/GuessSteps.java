@@ -1,7 +1,6 @@
 package com.odde.guess.acceptancetest.steps;
 
 import com.odde.guess.acceptancetest.driver.UiDriver;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +30,10 @@ public class GuessSteps {
     @Then("^win the game$")
     public void winTheGame() throws Throwable {
         driver.waitForTextPresent("You Win!");
+    }
+
+    @Then("^show message \"([^\"]*)\"$")
+    public void showMessage(String message) throws Throwable {
+        driver.waitForTextPresent(message);
     }
 }

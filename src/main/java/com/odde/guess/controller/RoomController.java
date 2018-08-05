@@ -47,7 +47,13 @@ public class RoomController {
 
     @PostMapping("/show/{id}")
     public ModelAndView guess(@PathVariable("id") long id, String guess) {
-        return showMessage("You Win!");
+        Room room = repo.findById(id);
+        if (room.getSecret().equals(guess)) {
+            return showMessage("You Win!");
+        } else {
+            return showMessage("0A0B");
+        }
+
     }
 
     private ModelAndView showMessage(String message) {

@@ -47,10 +47,18 @@ public class RoomControllerTest {
         assertThat(view.getModelMap().get("message")).isEqualTo("You Win!");
     }
 
+    @Test
+    public void guess_wrong() {
+        when(repo.findById(1)).thenReturn(new Room("1234"));
+
+        ModelAndView view = controller.guess(1, "5678");
+
+        assertThat(view.getModelMap().get("message")).isEqualTo("0A0B");
+    }
+
     private void willReturnSavedRoomWithId(int id) {
         when(repo.save(any(Room.class))).thenReturn(new Room("1234") {{
             setId(id);
         }});
     }
-
 }
