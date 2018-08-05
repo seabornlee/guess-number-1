@@ -2,6 +2,7 @@ package com.odde.guess.controller;
 
 import com.odde.guess.repo.Room;
 import com.odde.guess.repo.RoomRepository;
+import com.odde.guess.service.VerifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class RoomController {
 
     private final RoomRepository repo;
+    private VerifyService verification;
 
     @Autowired
-    public RoomController(RoomRepository repo) {
+    public RoomController(RoomRepository repo, VerifyService verification) {
         this.repo = repo;
+        this.verification = verification;
+    }
+
+    public RoomController(RoomRepository repo) {
+        this(repo, new VerifyService(repo));
     }
 
     @GetMapping
@@ -47,13 +54,7 @@ public class RoomController {
 
     @PostMapping("/show/{id}")
     public ModelAndView guess(@PathVariable("id") long id, String guess) {
-        Room room = repo.findById(id);
-        if (room.getSecret().equals(guess)) {
-            return showMessage("You Win!");
-        } else {
-            return showMessage("0A0B");
-        }
-
+        return showMessage(verification.getResult(id, guess));
     }
 
     private ModelAndView showMessage(String message) {
