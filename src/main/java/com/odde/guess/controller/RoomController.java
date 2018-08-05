@@ -42,16 +42,17 @@ public class RoomController {
 
     @GetMapping("/show/{id}")
     public ModelAndView show(@PathVariable("id") String id) {
-        ModelAndView modelAndView = new ModelAndView("/rooms/show");
-        modelAndView.addObject("message","");
-        return modelAndView;
+        return showMessage("");
     }
 
     @PostMapping("/show/{id}")
-    public ModelAndView guess(@PathVariable("id") String id) {
-        ModelAndView modelAndView = new ModelAndView("/rooms/show");
-        modelAndView.addObject("message","You Win!");
-        return modelAndView;
+    public ModelAndView guess(@PathVariable("id") long id, String guess) {
+        return showMessage("You Win!");
+    }
 
+    private ModelAndView showMessage(String message) {
+        ModelAndView modelAndView = new ModelAndView("/rooms/show");
+        modelAndView.addObject("message", message);
+        return modelAndView;
     }
 }

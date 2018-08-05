@@ -26,6 +26,7 @@ public class SeleniumWebDriver implements UiDriver {
     @Override
     public void navigateTo(String url) {
         webDriver.get(url);
+        webDriver.switchTo().window(webDriver.getWindowHandle());
     }
 
     @Override
@@ -44,13 +45,23 @@ public class SeleniumWebDriver implements UiDriver {
         elementByName(name).sendKeys(text);
     }
 
-    private WebElement elementByName(String name) {
-        return webDriver.findElement(By.name(name));
-    }
-
     @Override
     public void clickByText(String text) {
         firstElementByText(text).click();
+    }
+
+    @Override
+    public void selectOptionByTextAndElementName(String text, String elementName) {
+        new Select(elementByName(elementName)).selectByVisibleText(text);
+    }
+
+    @Override
+    public String getAllTextInPage() {
+        return elementByTag().getText();
+    }
+
+    private WebElement elementByName(String name) {
+        return webDriver.findElement(By.name(name));
     }
 
     private WebElement firstElementByText(String text) {
@@ -74,16 +85,6 @@ public class SeleniumWebDriver implements UiDriver {
 
     private List<WebElement> elementsByXPath(String xpath) {
         return webDriver.findElements(By.xpath(xpath));
-    }
-
-    @Override
-    public void selectOptionByTextAndElementName(String text, String elementName) {
-        new Select(elementByName(elementName)).selectByVisibleText(text);
-    }
-
-    @Override
-    public String getAllTextInPage() {
-        return elementByTag().getText();
     }
 
     private WebElement elementByTag() {

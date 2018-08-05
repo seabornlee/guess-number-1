@@ -20,12 +20,8 @@ public class RoomControllerTest {
         assertThat(view.getViewName()).isEqualTo("/rooms/index");
     }
 
-    private void willReturnSavedRoomWithId(final int id) {
-        when(repo.save(any(Room.class))).thenReturn(new Room("1234") {{setId(id);}});
-    }
-
     @Test
-    public void create_room(){
+    public void create_room() {
         willReturnSavedRoomWithId(1);
 
         controller.submitCreateRoom("1234");
@@ -34,11 +30,27 @@ public class RoomControllerTest {
     }
 
     @Test
-    void show_room_after_creation() {
+    public void show_room_after_creation() {
         willReturnSavedRoomWithId(1);
 
         String view = controller.submitCreateRoom("1234");
 
-        assertThat(view).isEqualToIgnoringCase("redirect:/rooms/1");
+        assertThat(view).isEqualToIgnoringCase("redirect:/rooms/show/1");
     }
+
+    @Test
+    public void guess_win() {
+        when(repo.findById(1)).thenReturn(new Room("1234"));
+
+        ModelAndView view = controller.guess(1, "1234");
+
+        assertThat(view.getModelMap().get("message")).isEqualTo("You Win!");
+    }
+
+    private void willReturnSavedRoomWithId(int id) {
+        when(repo.save(any(Room.class))).thenReturn(new Room("1234") {{
+            setId(id);
+        }});
+    }
+
 }
