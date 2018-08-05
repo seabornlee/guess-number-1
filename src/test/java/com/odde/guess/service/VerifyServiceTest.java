@@ -31,6 +31,21 @@ public class VerifyServiceTest {
         verifyGuess("1A0B", "5674", "1234");
     }
 
+    @Test
+    public void _2A0B() {
+        verifyGuess("2A0B", "1278", "1234");
+    }
+
+    @Test
+    public void _0A1B() {
+        verifyGuess("0A1B", "5178", "1234");
+    }
+
+    @Test
+    public void _0A2B() {
+        verifyGuess("0A2B", "2178", "1234");
+    }
+
     private void verifyGuess(String expectResult, String guess, String secret) {
         when(repo.findById(1)).thenReturn(new Room(secret));
 
