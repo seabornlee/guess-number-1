@@ -15,8 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/rooms")
 public class RoomController {
 
+    private static final String WIN_MESSAGE = "You Win!";
+    private static final String WIN_RESULT = "4A0B";
     private final RoomRepository repo;
-    private VerifyService verification;
+    private final VerifyService verification;
 
     @Autowired
     public RoomController(RoomRepository repo, VerifyService verification) {
@@ -50,7 +52,10 @@ public class RoomController {
 
     @PostMapping("/show/{id}")
     public ModelAndView guess(@PathVariable("id") long id, String guess) {
-        return showMessage(verification.verify(id, guess));
+        String message = verification.verify(id, guess);
+        if (message.equals(WIN_RESULT))
+            message = WIN_MESSAGE;
+        return showMessage(message);
     }
 
     private ModelAndView showMessage(String message) {

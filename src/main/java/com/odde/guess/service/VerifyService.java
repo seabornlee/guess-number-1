@@ -18,7 +18,7 @@ public class VerifyService {
         Room room = repo.findById(id);
         String result;
         if (room.getSecret().equals(guess)) {
-            result = "You Win!";
+            result = "4A0B";
         } else {
             result = "0A0B";
         }

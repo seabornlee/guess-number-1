@@ -15,7 +15,7 @@ public class VerifyServiceTest {
 
     @Test
     public void guess_win() {
-        verifyGuess("You Win!", "1234", "1234");
+        verifyGuess("4A0B", "1234", "1234");
     }
 
     @Test
@@ -28,7 +28,7 @@ public class VerifyServiceTest {
 
         String result = verifyService.verify(1, guess);
 
-        assertThat(result).isEqualTo(result);
+        assertThat(result).isEqualTo(expectResult);
     }
 
 }

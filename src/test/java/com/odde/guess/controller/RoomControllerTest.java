@@ -49,6 +49,15 @@ public class RoomControllerTest {
         assertThat(view.getModelMap().get("message")).isEqualTo("Result");
     }
 
+    @Test
+    void show_win_result() {
+        when(verifyService.verify(anyLong(), anyString())).thenReturn("4A0B");
+
+        ModelAndView view = controller.guess(1, "5678");
+
+        assertThat(view.getModelMap().get("message")).isEqualTo("You Win!");
+    }
+
     private void willReturnSavedRoomWithId(int id) {
         when(repo.save(any(Room.class))).thenReturn(new Room("1234") {{
             setId(id);
