@@ -1,8 +1,7 @@
 package com.odde.guess.controller;
 
-import com.odde.guess.repo.Room;
+import com.odde.guess.model.Room;
 import com.odde.guess.repo.RoomRepository;
-import com.odde.guess.service.VerifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +17,10 @@ public class RoomController {
     private static final String WIN_MESSAGE = "You Win!";
     private static final String WIN_RESULT = "4A0B";
     private final RoomRepository repo;
-    private final VerifyService verification;
 
     @Autowired
-    public RoomController(RoomRepository repo, VerifyService verification) {
+    public RoomController(RoomRepository repo) {
         this.repo = repo;
-        this.verification = verification;
     }
 
     @GetMapping

@@ -1,6 +1,5 @@
-package com.odde.guess.repo;
+package com.odde.guess.model;
 
-import com.odde.guess.service.VerifyService;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

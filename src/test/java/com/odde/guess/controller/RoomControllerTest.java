@@ -1,8 +1,7 @@
 package com.odde.guess.controller;
 
-import com.odde.guess.repo.Room;
+import com.odde.guess.model.Room;
 import com.odde.guess.repo.RoomRepository;
-import com.odde.guess.service.VerifyService;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,8 +12,7 @@ import static org.mockito.Mockito.*;
 
 public class RoomControllerTest {
     private RoomRepository repo = mock(RoomRepository.class);
-    private VerifyService verifyService = mock(VerifyService.class);
-    private RoomController controller = new RoomController(repo, verifyService);
+    private RoomController controller = new RoomController(repo);
     private Room room = mock(Room.class);
 
     @Test

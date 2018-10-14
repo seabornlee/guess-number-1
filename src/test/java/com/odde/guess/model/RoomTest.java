@@ -1,11 +1,11 @@
-package com.odde.guess.service;
+package com.odde.guess.model;
 
-import com.odde.guess.repo.Room;
+import com.odde.guess.model.Room;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class VerifyServiceTest {
+public class RoomTest {
     @Test
     public void guess_win() {
         verifyGuess("4A0B", "1234", "1234");
