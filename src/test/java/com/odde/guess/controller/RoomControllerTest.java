@@ -15,6 +15,7 @@ public class RoomControllerTest {
     private RoomRepository repo = mock(RoomRepository.class);
     private VerifyService verifyService = mock(VerifyService.class);
     private RoomController controller = new RoomController(repo, verifyService);
+    private Room room = mock(Room.class);
 
     @Test
     public void rooms_should_go_to_index_page() {
@@ -42,7 +43,9 @@ public class RoomControllerTest {
 
     @Test
     public void show_result() {
-        when(verifyService.verify(anyLong(), anyString())).thenReturn("Result");
+        when(repo.findById(1)).thenReturn(room);
+        when(room.verify(anyString())).thenReturn("Result");
+
 
         ModelAndView view = controller.guess(1, "5678");
 
@@ -51,7 +54,9 @@ public class RoomControllerTest {
 
     @Test
     void show_win_result() {
-        when(verifyService.verify(anyLong(), anyString())).thenReturn("4A0B");
+
+        when(repo.findById(1)).thenReturn(room);
+        when(room.verify(anyString())).thenReturn("4A0B");
 
         ModelAndView view = controller.guess(1, "5678");
 
