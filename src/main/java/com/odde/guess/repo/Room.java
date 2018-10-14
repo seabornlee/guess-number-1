@@ -21,4 +21,13 @@ public class Room {
     public Room(String secret) {
         this.secret = secret;
     }
+
+    public boolean equalDigital(String guess, int i) {
+        return guess.charAt(i) == secret.charAt(i);
+    }
+
+    public boolean containDigital(String guess, int i) {
+        return secret.indexOf(guess.charAt(i)) >= 0;
+
+    }
 }
