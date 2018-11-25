@@ -6,7 +6,13 @@
                 <input type="text" name="guess"/>
                 <input type="submit" value="Go"/>
             </form>
-            <div>{{message}}</div>
+            <table align="center">
+
+                {{#message}}
+                    <tr>
+                        <td>{{.}}</td>
+                    </tr>{{/message}}
+            </table>
         </div>
     </section>
 {{/layout}}

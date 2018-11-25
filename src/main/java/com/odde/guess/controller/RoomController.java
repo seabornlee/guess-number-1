@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -61,7 +62,9 @@ public class RoomController {
             message = WIN_MESSAGE;
             return showMessage(Arrays.asList(message));
         } else {
-            return showMessage(room.getLogs());
+            List<String> roomlist = room.getLogs();
+            Collections.reverse(roomlist);
+            return showMessage(roomlist);
         }
     }
 
