@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.Collections.emptyList;
+
 @Controller
 @RequestMapping("/rooms")
 public class RoomController {
@@ -44,20 +49,25 @@ public class RoomController {
 
     @GetMapping("/show/{id}")
     public ModelAndView show(@PathVariable("id") String id) {
-        return showMessage("");
+        return showMessage(emptyList());
     }
 
     @PostMapping("/show/{id}")
     public ModelAndView guess(@PathVariable("id") long id, String guess) {
-        String message = repo.findById(id).verify(guess);
-        if (message.equals(guess + " " + WIN_RESULT))
+        Room room = repo.findById(id);
+        String message = room.verify(guess);
+        repo.save(room);
+        if (message.equals(guess + " " + WIN_RESULT)) {
             message = WIN_MESSAGE;
-        return showMessage(message);
+            return showMessage(Arrays.asList(message));
+        } else {
+            return showMessage(room.getLogs());
+        }
     }
 
-    private ModelAndView showMessage(String message) {
+    private ModelAndView showMessage(List<String> logs) {
         ModelAndView modelAndView = new ModelAndView("/rooms/show");
-        modelAndView.addObject("message", message);
+        modelAndView.addObject("message", logs);
         return modelAndView;
     }
 }

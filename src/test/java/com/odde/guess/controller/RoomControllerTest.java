@@ -3,7 +3,10 @@ package com.odde.guess.controller;
 import com.odde.guess.model.Room;
 import com.odde.guess.repo.RoomRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,13 +44,27 @@ public class RoomControllerTest {
 
     @Test
     public void show_result() {
+        when(room.getLogs()).thenReturn(Arrays.asList("Result"));
         when(repo.findById(1)).thenReturn(room);
         when(room.verify(anyString())).thenReturn("Result");
 
 
         ModelAndView view = controller.guess(1, "5678");
 
-        assertThat(view.getModelMap().get("message")).isEqualTo("Result");
+        assertThat(view.getModelMap().get("message")).isEqualTo(Arrays.asList("Result"));
+    }
+
+    @Test
+    public void should_save_guess_log() {
+        when(repo.findById(1)).thenReturn(room);
+        when(room.verify(anyString())).thenReturn("Result");
+
+        ModelAndView view = controller.guess(1, "5678");
+        ArgumentCaptor<Room> captor = ArgumentCaptor.forClass(Room.class);
+
+        verify(repo).save(captor.capture());
+        assertThat(captor.getValue()).isSameAs(room);
+
     }
 
     @Test
@@ -58,7 +75,7 @@ public class RoomControllerTest {
 
         ModelAndView view = controller.guess(1, "5678");
 
-        assertThat(view.getModelMap().get("message")).isEqualTo("You Win!");
+        assertThat(view.getModelMap().get("message")).isEqualTo(Arrays.asList("You Win!"));
     }
 
     private void willReturnSavedRoomWithId(int id) {

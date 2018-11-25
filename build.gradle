@@ -34,6 +34,7 @@ repositories {
 
 
 dependencies {
+    annotationProcessor("org.projectlombok:lombok:1.18.2")
     compile(
             'org.springframework.boot:spring-boot-starter-data-jpa',
             'org.springframework.boot:spring-boot-starter-mustache',
@@ -42,19 +43,19 @@ dependencies {
             'org.webjars:bootstrap:4.1.1',
             'org.webjars:jquery:3.3.1-1',
             'mysql:mysql-connector-java',
-            "org.projectlombok:lombok:1.18.0"
+            "org.projectlombok:lombok:1.18.2"
     )
     runtime('org.springframework.boot:spring-boot-devtools')
     testCompile(
             'org.springframework.boot:spring-boot-starter-test',
-            "org.junit.jupiter:junit-jupiter-api:5.2.0",
+            "org.junit.jupiter:junit-jupiter-api:5.3.1",
             "org.mockito:mockito-core:2.+",
             "io.cucumber:cucumber-java:2.+",
             "io.cucumber:cucumber-spring:2.+",
             "org.seleniumhq.selenium:selenium-java",
             "org.assertj:assertj-core",
     )
-    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.1')
     cucumberRuntime "io.cucumber:cucumber-java:2.+"
     providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
 }
@@ -89,6 +90,7 @@ cucumber {
 }
 
 test {
+    useJUnitPlatform()
     environment "SPRING_PROFILES_ACTIVE", "test"
     jacoco {
         enabled false

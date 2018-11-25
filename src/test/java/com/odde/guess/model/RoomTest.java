@@ -38,6 +38,16 @@ public class RoomTest {
         verifyGuess("0A2B", "2178", "1234");
     }
 
+    @Test
+    public void test_log() {
+        Room room = new Room("1234");
+
+        room.verify("5678");
+        room.verify("1357");
+
+        assertThat(room.getLogs()).containsExactly("5678 0A0B", "1357 1A1B");
+    }
+
     private void verifyGuess(String expectResult, String guess, String secret) {
         String result = new Room(secret).verify(guess);
         assertThat(result).isEqualTo(guess + " " + expectResult);
