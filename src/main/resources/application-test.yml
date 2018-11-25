@@ -6,8 +6,8 @@ spring:
       ddl-auto: create
 
 server:
-  port: 8080
+  port: 18080
 
 cucumber:
-  port: 8080
+  port: 18080
   context-path:

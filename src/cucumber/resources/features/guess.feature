@@ -13,4 +13,4 @@ Feature: guess
   Scenario: guess wrong
     Given I create a room with secret "1234"
     When guess "5678"
-    Then show message "0A0B"
+    Then show message "5678" and "0A0B"

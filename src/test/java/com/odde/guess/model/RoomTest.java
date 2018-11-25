@@ -1,6 +1,5 @@
 package com.odde.guess.model;
 
-import com.odde.guess.model.Room;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,7 +40,7 @@ public class RoomTest {
 
     private void verifyGuess(String expectResult, String guess, String secret) {
         String result = new Room(secret).verify(guess);
-        assertThat(result).isEqualTo(expectResult);
+        assertThat(result).isEqualTo(guess + " " + expectResult);
     }
 
 }

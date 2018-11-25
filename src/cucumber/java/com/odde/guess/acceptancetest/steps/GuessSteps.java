@@ -34,6 +34,12 @@ public class GuessSteps {
 
     @Then("^show message \"([^\"]*)\"$")
     public void showMessage(String message) throws Throwable {
-        driver.waitForTextPresent(message);
+
+    }
+
+    @Then("^show message \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void showMessageAnd(String guess, String result) throws Throwable {
+        driver.waitForTextPresent(guess);
+        driver.waitForTextPresent(result);
     }
 }

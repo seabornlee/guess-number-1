@@ -50,7 +50,7 @@ public class RoomController {
     @PostMapping("/show/{id}")
     public ModelAndView guess(@PathVariable("id") long id, String guess) {
         String message = repo.findById(id).verify(guess);
-        if (message.equals(WIN_RESULT))
+        if (message.equals(guess + " " + WIN_RESULT))
             message = WIN_MESSAGE;
         return showMessage(message);
     }

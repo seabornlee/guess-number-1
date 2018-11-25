@@ -54,7 +54,7 @@ public class RoomControllerTest {
     void show_win_result() {
 
         when(repo.findById(1)).thenReturn(room);
-        when(room.verify(anyString())).thenReturn("4A0B");
+        when(room.verify(anyString())).thenReturn("5678 4A0B");
 
         ModelAndView view = controller.guess(1, "5678");
 

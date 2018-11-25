@@ -24,20 +24,20 @@ public class Room {
         this.secret = secret;
     }
 
+    public String verify(String guess) {
+        long countA = count(guess.length(), i -> equalDigital(guess, i));
+
+        long countB = count(guess.length(), i -> containDigital(guess, i)) - countA;
+
+        return String.format("%s %dA%dB", guess, countA, countB);
+    }
+
     private boolean equalDigital(String guess, int i) {
         return guess.charAt(i) == secret.charAt(i);
     }
 
     private boolean containDigital(String guess, int i) {
         return secret.indexOf(guess.charAt(i)) >= 0;
-    }
-
-    public String verify(String guess) {
-        long countA = count(guess.length(), i -> equalDigital(guess, i));
-
-        long countB = count(guess.length(), i -> containDigital(guess, i)) - countA;
-
-        return String.format("%dA%dB", countA, countB);
     }
 
     private long count(int length, IntPredicate predicate) {
