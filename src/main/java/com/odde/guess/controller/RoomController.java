@@ -21,7 +21,6 @@ import static java.util.Collections.emptyList;
 public class RoomController {
 
     private static final String WIN_MESSAGE = "You Win!";
-    private static final String WIN_RESULT = "4A0B";
     private final RoomRepository repo;
 
     @Autowired
@@ -56,20 +55,17 @@ public class RoomController {
     @PostMapping("/show/{id}")
     public ModelAndView guess(@PathVariable("id") long id, String guess) {
         Room room = repo.findById(id);
-        String message = room.verify(guess);
-        repo.save(room);
-        if (message.equals(guess + " " + WIN_RESULT)) {
-            message = WIN_MESSAGE;
-            return showMessage(Arrays.asList(message));
+        if (room.isWin(guess)) {
+            return showMessage(Arrays.asList(WIN_MESSAGE));
         } else {
-            List<String> roomlist = room.getLogs();
-            Collections.reverse(roomlist);
-            return showMessage(roomlist);
+            repo.save(room);
+            return showMessage(room.getLogs());
         }
     }
 
     private ModelAndView showMessage(List<String> logs) {
         ModelAndView modelAndView = new ModelAndView("/rooms/show");
+        Collections.reverse(logs);
         modelAndView.addObject("message", logs);
         return modelAndView;
     }

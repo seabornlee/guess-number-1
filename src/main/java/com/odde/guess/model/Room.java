@@ -14,10 +14,10 @@ import java.util.stream.IntStream;
 @NoArgsConstructor
 public class Room {
 
+    private static final String WIN_RESULT = "4A0B";
     @Id
     @GeneratedValue
     private long id;
-
     private String secret;
     @ElementCollection
     @CollectionTable(name = "GAME_LOGS", joinColumns = @JoinColumn(name = "ROOM_ID"))
@@ -36,6 +36,10 @@ public class Room {
         String message = String.format("%s %dA%dB", guess, countA, countB);
         logs.add(message);
         return message;
+    }
+
+    public boolean isWin(String guess) {
+        return verify(guess).equals(guess + " " + WIN_RESULT);
     }
 
     private boolean equalDigital(String guess, int i) {
