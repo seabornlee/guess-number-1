@@ -56,14 +56,13 @@ public class RoomController {
     @PostMapping("/show/{id}")
     public ModelAndView guess(@PathVariable("id") long id, String guess) {
         Room room = repo.findById(id);
-        if (room.isWin(guess)) {
-            List<String> logs = new ArrayList<>(room.getLogs());
+        boolean win = room.isWin(guess);
+        List<String> logs = new ArrayList<>(room.getLogs());
+        if (win) {
             logs.add(WIN_MESSAGE);
-            return showMessage(logs);
-        } else {
-            repo.save(room);
-            return showMessage(room.getLogs());
         }
+        repo.save(room);
+        return showMessage(logs);
     }
 
     private ModelAndView showMessage(List<String> logs) {

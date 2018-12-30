@@ -77,6 +77,10 @@ public class RoomControllerTest {
         ModelAndView view = controller.guess(1, "5678");
 
         assertThat(view.getModelMap().get("message")).isEqualTo(Arrays.asList("You Win!", "5678 4A0B"));
+
+        ArgumentCaptor<Room> captor = ArgumentCaptor.forClass(Room.class);
+        verify(repo).save(captor.capture());
+        assertThat(captor.getValue()).isSameAs(room);
     }
 
     private void willReturnSavedRoomWithId(int id) {

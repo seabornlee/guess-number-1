@@ -44,8 +44,9 @@ public class RoomTest {
 
         room.verify("5678");
         room.verify("1357");
+        room.verify("1234");
 
-        assertThat(room.getLogs()).containsExactly("5678 0A0B", "1357 1A1B");
+        assertThat(room.getLogs()).containsExactly("5678 0A0B", "1357 1A1B", "1234 4A0B");
     }
 
     private void verifyGuess(String expectResult, String guess, String secret) {
