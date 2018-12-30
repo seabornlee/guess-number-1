@@ -51,7 +51,7 @@ public class RoomTest {
 
     private void verifyGuess(String expectResult, String guess, String secret) {
         String result = new Room(secret).verify(guess);
-        assertThat(result).isEqualTo(guess + " " + expectResult);
+        assertThat(result).isEqualTo(expectResult);
     }
 
 }

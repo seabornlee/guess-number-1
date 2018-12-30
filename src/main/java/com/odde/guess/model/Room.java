@@ -34,10 +34,9 @@ public class Room {
 
         long countB = count(guess.length(), i -> containDigital(guess, i)) - countA;
 
-        String message = String.format("%s %dA%dB", guess, countA, countB);
-        logs.add(message);
+        logs.add(String.format("%s %dA%dB", guess, countA, countB));
         isWin = countA == 4;
-        return message;
+        return String.format("%dA%dB", countA, countB);
     }
 
     public boolean isWin() {
