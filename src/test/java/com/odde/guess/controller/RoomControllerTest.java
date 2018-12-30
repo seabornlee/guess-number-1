@@ -47,7 +47,7 @@ public class RoomControllerTest {
     public void show_result() {
         when(room.getLogs()).thenReturn(Arrays.asList("Result"));
         when(repo.findById(1)).thenReturn(room);
-        when(room.verify(anyString())).thenReturn(new GuessResult(0,0));
+        when(room.verify(anyString())).thenReturn(new GuessResult("", 0,0));
 
 
         ModelAndView view = controller.guess(1, "5678");
@@ -58,7 +58,7 @@ public class RoomControllerTest {
     @Test
     public void should_save_guess_log() {
         when(repo.findById(1)).thenReturn(room);
-        when(room.verify(anyString())).thenReturn(new GuessResult(0,0));
+        when(room.verify(anyString())).thenReturn(new GuessResult("", 0,0));
 
         ModelAndView view = controller.guess(1, "5678");
         ArgumentCaptor<Room> captor = ArgumentCaptor.forClass(Room.class);
@@ -72,7 +72,7 @@ public class RoomControllerTest {
     void show_win_result() {
         when(repo.findById(1)).thenReturn(room);
         when(room.getLogs()).thenReturn(Arrays.asList("5678 4A0B"));
-        when(room.verify(anyString())).thenReturn(new GuessResult(4,0));
+        when(room.verify(anyString())).thenReturn(new GuessResult("", 4,0));
 
         ModelAndView view = controller.guess(1, "5678");
 

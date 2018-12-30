@@ -10,10 +10,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class GuessResult {
+    private String guess;
     private long a;
     private long b;
 
     public boolean isWin() {
-        return getA() == 4;
+        return a == 4;
+    }
+
+    String getMessage() {
+        return String.format("%s %dA%dB", guess, a, b);
     }
 }

@@ -55,7 +55,7 @@ public class RoomTest {
         long a = Long.parseLong(expectResult.charAt(0) + "");
         long b = Long.parseLong(expectResult.charAt(2) + "");
 
-        assertThat(result).isEqualTo(new GuessResult(a,b));
+        assertThat(result).isEqualTo(new GuessResult(guess, a,b));
     }
 
 }

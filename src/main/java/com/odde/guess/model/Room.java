@@ -31,8 +31,8 @@ public class Room {
         long countA = count(guess.length(), i -> equalDigital(guess, i));
         long countB = count(guess.length(), i -> containDigital(guess, i)) - countA;
 
-        GuessResult result = new GuessResult(countA, countB);
-        logs.add(String.format("%s %dA%dB", guess, result.getA(), result.getB()));
+        GuessResult result = new GuessResult(guess, countA, countB);
+        logs.add(result.getMessage());
         return result;
     }
 
