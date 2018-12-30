@@ -1,6 +1,7 @@
 package com.odde.guess.acceptancetest.steps;
 
 import com.odde.guess.acceptancetest.driver.UiDriver;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +43,10 @@ public class GuessSteps {
         driver.waitForTextPresent(guess);
         driver.waitForTextPresent(result);
     }
+
+    @When("^I create a room with a random secret$")
+    public void iCreateARoomWithARandomSecret() throws Throwable {
+        driver.clickByText("RANDOM");
+    }
+
 }

@@ -72,4 +72,13 @@ public class RoomController {
         modelAndView.addObject("message", logs);
         return modelAndView;
     }
+
+    @PostMapping("/random")
+    public String createRandomRoom() {
+        String secret ="1234";
+        Room room = repo.save(new Room(secret));
+        return "redirect:/rooms/show/" + room.getId();
+    }
+
+
 }

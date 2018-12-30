@@ -5,6 +5,10 @@ Feature: guess
     When I create a room with secret "1234"
     Then guess button will be enabled
 
+  Scenario: create a room with random number
+    When I create a room with a random secret
+    Then guess button will be enabled
+
   Scenario: guess win
     Given I create a room with secret "1234"
     When guess "1234"
