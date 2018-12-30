@@ -9,6 +9,7 @@ Feature: guess
     Given I create a room with secret "1234"
     When guess "1234"
     Then win the game
+    Then show message "1234" and "4A0B"
 
   Scenario: guess wrong
     Given I create a room with secret "1234"

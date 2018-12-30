@@ -71,11 +71,12 @@ public class RoomControllerTest {
     void show_win_result() {
 
         when(repo.findById(1)).thenReturn(room);
+        when(room.getLogs()).thenReturn(Arrays.asList("5678 4A0B"));
         when(room.isWin(anyString())).thenReturn(true);
 
         ModelAndView view = controller.guess(1, "5678");
 
-        assertThat(view.getModelMap().get("message")).isEqualTo(Arrays.asList("You Win!"));
+        assertThat(view.getModelMap().get("message")).isEqualTo(Arrays.asList("You Win!", "5678 4A0B"));
     }
 
     private void willReturnSavedRoomWithId(int id) {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -56,7 +57,9 @@ public class RoomController {
     public ModelAndView guess(@PathVariable("id") long id, String guess) {
         Room room = repo.findById(id);
         if (room.isWin(guess)) {
-            return showMessage(Arrays.asList(WIN_MESSAGE));
+            List<String> logs = new ArrayList<>(room.getLogs());
+            logs.add(WIN_MESSAGE);
+            return showMessage(logs);
         } else {
             repo.save(room);
             return showMessage(room.getLogs());
