@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
 
@@ -58,7 +59,7 @@ public class RoomController {
         Room room = repo.findById(id);
         GuessResult result = room.verify(guess);
         repo.save(room);
-        List<String> logs = new ArrayList<>(room.getLogs());
+        List<String> logs = new ArrayList<>(room.getLogs().stream().map(GuessResult::getMessage).collect(Collectors.toList()));
         if (result.isWin()) {
             logs.add(WIN_MESSAGE);
         }

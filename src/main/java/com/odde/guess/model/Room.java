@@ -18,10 +18,9 @@ public class Room {
     @GeneratedValue
     private long id;
     private String secret;
-    @ElementCollection
-    @CollectionTable(name = "GAME_LOGS", joinColumns = @JoinColumn(name = "ROOM_ID"))
-    @Column(name = "LOG")
-    private List<String> logs = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "room_id")
+    private List<GuessResult> logs = new ArrayList<>();
 
     public Room(String secret) {
         this.secret = secret;
@@ -32,7 +31,7 @@ public class Room {
         long countB = count(guess.length(), i -> containDigital(guess, i)) - countA;
 
         GuessResult result = new GuessResult(guess, countA, countB);
-        logs.add(result.getMessage());
+        logs.add(result);
         return result;
     }
 

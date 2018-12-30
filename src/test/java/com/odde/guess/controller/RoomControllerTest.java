@@ -45,14 +45,14 @@ public class RoomControllerTest {
 
     @Test
     public void show_result() {
-        when(room.getLogs()).thenReturn(Arrays.asList("Result"));
+        when(room.getLogs()).thenReturn(Arrays.asList(new GuessResult("5678", 0, 0)));
         when(repo.findById(1)).thenReturn(room);
-        when(room.verify(anyString())).thenReturn(new GuessResult("", 0,0));
+        when(room.verify(anyString())).thenReturn(new GuessResult("5678", 0,0));
 
 
         ModelAndView view = controller.guess(1, "5678");
 
-        assertThat(view.getModelMap().get("message")).isEqualTo(Arrays.asList("Result"));
+        assertThat(view.getModelMap().get("message")).isEqualTo(Arrays.asList("5678 0A0B"));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class RoomControllerTest {
     @Test
     void show_win_result() {
         when(repo.findById(1)).thenReturn(room);
-        when(room.getLogs()).thenReturn(Arrays.asList("5678 4A0B"));
+        when(room.getLogs()).thenReturn(Arrays.asList(new GuessResult("5678", 4, 0)));
         when(room.verify(anyString())).thenReturn(new GuessResult("", 4,0));
 
         ModelAndView view = controller.guess(1, "5678");
