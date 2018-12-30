@@ -1,7 +1,6 @@
 package com.odde.guess.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,14 +28,17 @@ public class Room {
         this.secret = secret;
     }
 
-    public String verify(String guess) {
+    public GuessResult verify(String guess) {
         long countA = count(guess.length(), i -> equalDigital(guess, i));
 
         long countB = count(guess.length(), i -> containDigital(guess, i)) - countA;
 
+        GuessResult result = new GuessResult(countA, countB);
+
         logs.add(String.format("%s %dA%dB", guess, countA, countB));
         isWin = countA == 4;
-        return String.format("%dA%dB", countA, countB);
+        return result;
+//        return String.format("%dA%dB", countA, countB);
     }
 
     public boolean isWin() {

@@ -50,8 +50,12 @@ public class RoomTest {
     }
 
     private void verifyGuess(String expectResult, String guess, String secret) {
-        String result = new Room(secret).verify(guess);
-        assertThat(result).isEqualTo(expectResult);
+        GuessResult result = new Room(secret).verify(guess);
+
+        long a = Long.parseLong(expectResult.charAt(0) + "");
+        long b = Long.parseLong(expectResult.charAt(2) + "");
+
+        assertThat(result).isEqualTo(new GuessResult(a,b));
     }
 
 }
