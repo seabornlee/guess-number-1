@@ -9,7 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode
-class GuessResult {
+public class GuessResult {
     private long a;
     private long b;
+
+    public boolean isWin() {
+        return getA() == 4;
+    }
 }

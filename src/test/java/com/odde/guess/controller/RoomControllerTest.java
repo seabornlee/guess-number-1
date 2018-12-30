@@ -1,5 +1,6 @@
 package com.odde.guess.controller;
 
+import com.odde.guess.model.GuessResult;
 import com.odde.guess.model.Room;
 import com.odde.guess.repo.RoomRepository;
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,7 @@ public class RoomControllerTest {
     public void show_result() {
         when(room.getLogs()).thenReturn(Arrays.asList("Result"));
         when(repo.findById(1)).thenReturn(room);
-        when(room.isWin()).thenReturn(false);
+        when(room.verify(anyString())).thenReturn(new GuessResult(0,0));
 
 
         ModelAndView view = controller.guess(1, "5678");
@@ -57,7 +58,7 @@ public class RoomControllerTest {
     @Test
     public void should_save_guess_log() {
         when(repo.findById(1)).thenReturn(room);
-        when(room.isWin()).thenReturn(false);
+        when(room.verify(anyString())).thenReturn(new GuessResult(0,0));
 
         ModelAndView view = controller.guess(1, "5678");
         ArgumentCaptor<Room> captor = ArgumentCaptor.forClass(Room.class);
@@ -69,10 +70,9 @@ public class RoomControllerTest {
 
     @Test
     void show_win_result() {
-
         when(repo.findById(1)).thenReturn(room);
         when(room.getLogs()).thenReturn(Arrays.asList("5678 4A0B"));
-        when(room.isWin()).thenReturn(true);
+        when(room.verify(anyString())).thenReturn(new GuessResult(4,0));
 
         ModelAndView view = controller.guess(1, "5678");
 

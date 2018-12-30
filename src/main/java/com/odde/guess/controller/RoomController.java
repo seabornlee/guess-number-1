@@ -1,5 +1,6 @@
 package com.odde.guess.controller;
 
+import com.odde.guess.model.GuessResult;
 import com.odde.guess.model.Room;
 import com.odde.guess.repo.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,17 +56,13 @@ public class RoomController {
     @PostMapping("/show/{id}")
     public ModelAndView guess(@PathVariable("id") long id, String guess) {
         Room room = repo.findById(id);
-        room.verify(guess);
+        GuessResult result = room.verify(guess);
         repo.save(room);
-        return showMessage(getLogs(room));
-    }
-
-    private List<String> getLogs(Room room) {
         List<String> logs = new ArrayList<>(room.getLogs());
-        if (room.isWin()) {
+        if (result.isWin()) {
             logs.add(WIN_MESSAGE);
         }
-        return logs;
+        return showMessage(logs);
     }
 
     private ModelAndView showMessage(List<String> logs) {

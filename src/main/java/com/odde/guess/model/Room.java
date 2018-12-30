@@ -22,7 +22,6 @@ public class Room {
     @CollectionTable(name = "GAME_LOGS", joinColumns = @JoinColumn(name = "ROOM_ID"))
     @Column(name = "LOG")
     private List<String> logs = new ArrayList<>();
-    private boolean isWin;
 
     public Room(String secret) {
         this.secret = secret;
@@ -30,19 +29,11 @@ public class Room {
 
     public GuessResult verify(String guess) {
         long countA = count(guess.length(), i -> equalDigital(guess, i));
-
         long countB = count(guess.length(), i -> containDigital(guess, i)) - countA;
 
         GuessResult result = new GuessResult(countA, countB);
-
-        logs.add(String.format("%s %dA%dB", guess, countA, countB));
-        isWin = countA == 4;
+        logs.add(String.format("%s %dA%dB", guess, result.getA(), result.getB()));
         return result;
-//        return String.format("%dA%dB", countA, countB);
-    }
-
-    public boolean isWin() {
-        return isWin;
     }
 
     private boolean equalDigital(String guess, int i) {
