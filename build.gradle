@@ -16,6 +16,7 @@ plugins {
     id "java"
     id "com.github.samueltbrown.cucumber" version "0.9"
     id "idea"
+    id "eclipse"
     id "war"
     id "jacoco"
 }
