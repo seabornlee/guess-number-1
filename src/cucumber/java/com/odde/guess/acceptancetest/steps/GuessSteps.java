@@ -46,6 +46,7 @@ public class GuessSteps {
 
     @When("^I create a room with a random secret$")
     public void iCreateARoomWithARandomSecret() throws Throwable {
+        driver.navigateTo("/rooms/create");
         driver.clickByText("RANDOM");
     }
 
